@@ -1,8 +1,8 @@
 # Hopscotch
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/hopscotch`. To experiment with that code, run `bin/console` for an interactive prompt.
+Hopscotch is a workflow engine built upon RabbitMQ. Taking inspiration from Sneakers, Sidekiq, Hutch and others it combines functionality and ideas from each of these to provide a tool suitable for building an integration platform. Whilst many tools focus on running jobs in the background or consuming messages non combine these into a workflow that would represent the expectation of scheduling a task or process to happen, monitoring its progress and ultimately seeing its completion.
 
-TODO: Delete this and the text above, and describe your gem
+Based upon work @lulibrary to facilitate data ingest and flow between systems hopscotch provides an opinionated yet extensible system to built your next workflow management tool.
 
 ## Installation
 
@@ -32,7 +32,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/hopscotch. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/hopscotch/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/stephenrob/hopscotch. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/stephenrob/hopscotch/blob/master/CODE_OF_CONDUCT.md).
 
 
 ## License
@@ -41,4 +41,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Hopscotch project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/hopscotch/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Hopscotch project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/stephenrob/hopscotch/blob/master/CODE_OF_CONDUCT.md).
