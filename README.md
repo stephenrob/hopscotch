@@ -1,8 +1,12 @@
 # Hopscotch
 
-Hopscotch is a workflow engine built upon RabbitMQ. Taking inspiration from Sneakers, Sidekiq, Hutch and others it combines functionality and ideas from each of these to provide a tool suitable for building an integration platform. Whilst many tools focus on running jobs in the background or consuming messages non combine these into a workflow that would represent the expectation of scheduling a task or process to happen, monitoring its progress and ultimately seeing its completion.
+Hopscotch is a workflow engine built upon RabbitMQ. Taking inspiration from Sneakers, Sidekiq, Hutch and others it combines functionality and ideas from each of these to provide a tool suitable for building an integration platform. 
 
-Based upon work @lulibrary to facilitate data ingest and flow between systems hopscotch provides an opinionated yet extensible system to built your next workflow management tool.
+Whilst many tools focus on running jobs in the background or consuming messages non combine these into a workflow that would represent the expectation of scheduling a task or process to happen, monitoring its progress and ultimately seeing its completion.
+
+*Chalk* is an extension to Hoscotch that provides persistance of workflows and their logs alongside providing a UI for viewing information on them.
+
+Based upon work [Lancaster University Library](https://github.com/lulibrary) to facilitate data ingest and flow between systems hopscotch provides an opinionated yet extensible system to built your next workflow management tool.
 
 ## Installation
 
