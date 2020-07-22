@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "hopscotch"
+require 'hopscotch/job_worker'
+
+require_relative 'full'
+
+worker = Hopscotch::JobWorker.new(Job1, Hopscotch.broker.data_exchange, 'ldapLoadUserQueue')
+
+worker.start!

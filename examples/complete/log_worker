@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "hopscotch"
+require 'hopscotch/job_worker'
+
+require_relative 'full'
+
+class LogWorker < Hopscotch::Worker
+  def initialize(exchange, topic, queue_name)
+    super(exchange, topic, queue_name)
+  end
+
+  def handle_message(message)
+    puts " [x] #{message.delivery_info.routing_key}:#{message.body}"
+    Hopscotch.broker.ack(message.delivery_info.delivery_tag)
+  end
+
+end
+
+worker = LogWorker.new(Hopscotch.broker.system_exchange, 'hopscotch.system.logger.*', 'hopscotchLogger')
+
+worker.start!
