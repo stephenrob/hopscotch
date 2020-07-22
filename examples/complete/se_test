@@ -10,7 +10,7 @@ require_relative 'full'
 
 class LogWorker < Hopscotch::Worker
 
-  use_exchange Hopscotch.broker.system_exchange
+  use_exchange 'hopscotch.system'
   use_queue 'hopscotchLogger'
   listen_on_topic 'hopscotch.system.logger.*'
 
@@ -21,8 +21,8 @@ class LogWorker < Hopscotch::Worker
 
 end
 
-worker_load = Hopscotch::JobWorker.new(Job1, Hopscotch.broker.data_exchange, 'ldapLoadUserQueue')
-worker_data = Hopscotch::JobWorker.new(Job2, Hopscotch.broker.data_exchange, 'ldapDataQueue')
+worker_load = Hopscotch::JobWorker.new(Job1, 'hopscotch.data', 'ldapLoadUserQueue')
+worker_data = Hopscotch::JobWorker.new(Job2, 'hopscotch.data', 'ldapDataQueue')
 
 runner = Hopscotch::Runner.new([LogWorker, worker_load, worker_data])
 runner.run

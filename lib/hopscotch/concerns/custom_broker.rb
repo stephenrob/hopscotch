@@ -8,7 +8,7 @@ module Hopscotch
     module ClassMethods
 
       def use_exchange(exchange)
-        @exchange = exchange
+        @exchange_name = exchange
       end
 
       def listen_on_topic(topic)
@@ -28,13 +28,14 @@ module Hopscotch
       end
 
       def exchange
-        @exchange
+        @exchange_name
       end
 
     end
 
     def exchange
-      @exchange ||= self.class.exchange
+      @exchange_name ||= self.class.exchange
+      @exchange ||= @broker.connect_to_exchange!(@exchange_name)
     end
 
     def queue_name

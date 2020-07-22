@@ -7,7 +7,7 @@ module Hopscotch
       @klass = job_klass
       @topic = @klass.consumed_message_type
       @queue_name = queue_name
-      @exchange = exchange
+      @exchange_name = exchange
     end
 
     def handle_message(message)
