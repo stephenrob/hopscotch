@@ -28,6 +28,10 @@ module Hopscotch
     end
 
     def stop
+      @workers.each do |worker|
+        worker.stop!
+      end
+      Hopscotch.client.close
       @stop_flag.set!
     end
 

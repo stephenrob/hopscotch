@@ -40,7 +40,7 @@ module Hopscotch
 
     def stop!
       @subscription.cancel if @subscription
-      broker.close
+      broker.close_channel
     end
 
     def handle_message(_message)

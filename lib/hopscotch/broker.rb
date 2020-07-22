@@ -42,11 +42,14 @@ module Hopscotch
       @channel = @connection.create_channel
     end
 
-    def close
-      puts "closing broker connection"
+    def close_channel
       channel.close if channel
-      @connection.close if @connection
       @channel = nil
+    end
+
+    def close
+      close_channel
+      @connection.close if @connection
     end
 
     def ack(delivery_tag)
