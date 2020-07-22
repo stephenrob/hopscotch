@@ -1,6 +1,6 @@
 module Hopscotch
   module MessageValidators
-    module MessageValidator
+    module Validations
 
       def self.included(base)
         base.extend(ClassMethods)

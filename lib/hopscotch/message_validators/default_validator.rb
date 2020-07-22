@@ -1,10 +1,10 @@
 require 'hopscotch/raw_message'
-require 'hopscotch/message_validators/message_validator'
+require 'hopscotch/message_validators/validations'
 
 module Hopscotch
   module MessageValidators
     class DefaultValidator
-      include MessageValidator
+      include Validations
 
       validates_class RawMessage
 
