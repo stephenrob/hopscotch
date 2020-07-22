@@ -1,36 +1,46 @@
 require 'securerandom'
 require 'hopscotch/logger'
 require 'hopscotch/raw_message'
+require 'hopscotch/concerns/custom_broker'
 
 module Hopscotch
   class Worker
-    include Logger
+    include Logger, CustomBroker
 
     def self.default_logging_topic
       'hopscotch.system.logger.worker'
     end
 
-    def initialize(exchange, topic, queue_name)
-      @exchange = exchange
-      @topic = topic
-      @queue_name = queue_name
+    def initialize
       @queue = nil
     end
 
     def start!
       connect_to_queue! unless @queue
-      @queue.subscribe(consumer_tag: SecureRandom.uuid, block: true, manual_ack: true) do |delivery_info, properties, body|
+      @subscription = @queue.subscribe(consumer_tag: SecureRandom.uuid, block: false, manual_ack: true) do |delivery_info, properties, body|
         message = RawMessage.new(delivery_info, properties, body)
         unless message.valid?
           logger.debug("Rejecting message with id #{properties.message_id} due to not being valid")
-          Hopscotch.broker.reject(message.delivery_info.delivery_tag)
+          broker.reject(message.delivery_info.delivery_tag)
           next
         end
-        handle_message(message)
+        response = handle_message(message)
+
+        if response == :ack
+          broker.ack(message.delivery_info.delivery_tag)
+        else
+          broker.reject(message.delivery_info.delivery_tag)
+        end
+
       end
     rescue Interrupt => _
-      Hopscotch.broker.close
+      broker.close
       exit(0)
+    end
+
+    def stop!
+      @subscription.cancel if @subscription
+      broker.close
     end
 
     def handle_message(_message)
@@ -38,8 +48,8 @@ module Hopscotch
     end
 
     def connect_to_queue!
-      @queue = Hopscotch.broker.queue(@queue_name)
-      @queue.bind(@exchange, routing_key: @topic)
+      @queue = broker.queue(queue_name)
+      @queue.bind(exchange, routing_key: topic)
     end
   end
 end

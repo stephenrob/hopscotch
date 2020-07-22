@@ -43,6 +43,7 @@ module Hopscotch
     end
 
     def close
+      puts "closing broker connection"
       channel.close if channel
       @connection.close if @connection
       @channel = nil

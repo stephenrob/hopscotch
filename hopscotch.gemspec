@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'bunny', '~> 2.15'
   spec.add_dependency "dry-configurable", "~> 0.11"
   spec.add_dependency 'semantic_logger', '~> 4.7'
+  spec.add_dependency 'serverengine', '~> 2.2'
 end

@@ -5,16 +5,13 @@ module Hopscotch
 
     def initialize(job_klass, exchange, queue_name)
       @klass = job_klass
-      super(exchange, @klass.consumed_message_type, queue_name)
+      @topic = @klass.consumed_message_type
+      @queue_name = queue_name
+      @exchange = exchange
     end
 
     def handle_message(message)
-      response = @klass.new.handle(message)
-      if response == :ack
-        Hopscotch.broker.ack(message.delivery_info.delivery_tag)
-      else
-        Hopscotch.broker.reject(message.delivery_info.delivery_tag)
-      end
+      @klass.new.handle(message)
     end
 
   end

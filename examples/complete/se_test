@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "hopscotch"
+require 'hopscotch/worker'
+require 'hopscotch/job_worker'
+require 'hopscotch/runner'
+
+require_relative 'full'
+
+class LogWorker < Hopscotch::Worker
+
+  use_exchange Hopscotch.broker.system_exchange
+  use_queue 'hopscotchLogger'
+  listen_on_topic 'hopscotch.system.logger.*'
+
+  def handle_message(message)
+    puts " [x] #{message.delivery_info.routing_key}:#{message.body}"
+    :ack
+  end
+
+end
+
+worker_load = Hopscotch::JobWorker.new(Job1, Hopscotch.broker.data_exchange, 'ldapLoadUserQueue')
+worker_data = Hopscotch::JobWorker.new(Job2, Hopscotch.broker.data_exchange, 'ldapDataQueue')
+
+runner = Hopscotch::Runner.new([LogWorker, worker_load, worker_data])
+runner.run
+
+# se = ServerEngine.create(nil, Hopscotch::Runner, {
+#     daemonize: false,
+#     log: 'test.log',
+#     pid_path: 'test_server.pid'
+# })
+#
+# se.run
