@@ -2,6 +2,9 @@ require 'securerandom'
 
 module Hopscotch
   class Message
+
+    attr_reader :message_type, :message_version, :data
+
     def initialize(message_type, message_version, message_id: nil, data: {}, meta: {})
       @message_type = message_type
       @message_version = message_version
@@ -17,8 +20,8 @@ module Hopscotch
           version: @message_version
       }
 
-      if @meta.is_a?(Hash) && (!@meta.nil? && !@meta.empty?)
-        meta_details.merge!(@meta)
+      if @custom_meta.is_a?(Hash) && (!@custom_meta.nil? && !@custom_meta.empty?)
+        meta_details.merge!(@custom_meta)
       end
 
       meta_details

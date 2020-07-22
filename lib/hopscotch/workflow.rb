@@ -2,6 +2,7 @@ require 'securerandom'
 
 require 'hopscotch/producer'
 require 'hopscotch/publishers/data_message_publisher'
+require 'hopscotch/workflow_message'
 
 module Hopscotch
   class Workflow
@@ -29,8 +30,8 @@ module Hopscotch
       publish_messages
     end
 
-    def queue_message(topic, data)
-      queued_messages << {topic: topic, data: data}
+    def queue_message(topic, message)
+      queued_messages << {topic: topic, message: message}
     end
 
     def queued_messages
@@ -39,7 +40,7 @@ module Hopscotch
 
     def publish_messages
       queued_messages.each do |message|
-        publish_data_message(message[:topic], message[:data])
+        publish_data_message(message[:topic], WorkflowMessage.from_message(message[:message], self.class.to_s, workflow_id: id))
       end
     end
 

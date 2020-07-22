@@ -15,19 +15,26 @@ module Hopscotch
 
     def handle(message)
 
-      parse_message_metadata(message)
+      parse_message_metadata(message.processed_message)
 
-      update_job_status(Status::IN_PROGRESS)
+      logger.tagged(workflow: workflow, workflow_id: workflow_id, run_id: run_id) do
 
-      result = run(message)
+        logger.info("Starting run #{run_id} of workflow #{workflow} with id #{workflow_id}")
 
-      if result == :ack
-        update_job_status(Status::COMPLETE)
-      else
-        update_job_status(Status::FAILED)
+        update_job_status(Status::IN_PROGRESS)
+
+        result = run(message)
+
+        if result == :ack
+          logger.info("Finished run #{run_id} of workflow #{workflow} with id #{workflow_id}")
+          update_job_status(Status::COMPLETE)
+        else
+          update_job_status(Status::FAILED)
+        end
+
+        return result
+
       end
-
-      result
 
     end
 
@@ -36,11 +43,17 @@ module Hopscotch
     end
 
     def workflow_id
-      @workflow_id ||= 'Unknown'
+      @workflow_id ||= SecureRandom.uuid
+    end
+
+    def workflow
+      @workflow ||= "Standalone"
     end
 
     def parse_message_metadata(message)
-      @workflow_id = message.processed_message.message_id
+      @workflow_id = message.meta[:workflowId]
+      @workflow = message.meta[:workflow]
+      @run_id = message.meta[:run_id]
     end
 
   end
