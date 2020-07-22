@@ -10,6 +10,7 @@ require 'hopscotch/message'
 require 'hopscotch/serializers/json_serializer'
 require 'hopscotch/status'
 require 'hopscotch/logger'
+require 'hopscotch/message_validators'
 
 module Hopscotch
   extend Dry::Configurable
@@ -20,6 +21,7 @@ module Hopscotch
   setting :serializer, Hopscotch::Serializers::JsonSerializer, reader: true
   setting :log_adapter, Hopscotch::Logger::Adapter, reader: true
   setting :log_formatter, Hopscotch::Logger::MessageFormatter, reader: true
+  setting :message_validator, Hopscotch::MessageValidators::DefaultValidator, reader: true
 
   def self.broker
     @broker ||= Hopscotch::Broker.new(client)

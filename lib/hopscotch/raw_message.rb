@@ -13,11 +13,7 @@ module Hopscotch
     end
 
     def valid?
-      return false unless body.keys.include? :meta
-      return false unless body.keys.include? :data
-      return false unless [:type, :version, :messageId].all? { |key| body[:meta].keys.include? key }
-
-      true
+      Hopscotch.message_validator.is_valid?(self)
     end
 
     def processed_message
