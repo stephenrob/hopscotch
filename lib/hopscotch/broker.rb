@@ -26,6 +26,7 @@ module Hopscotch
     def queue(name)
       start_connection!
       create_channel! unless channel
+      @channel.prefetch(1)
       @channel.queue(name, {durable: true})
     end
 

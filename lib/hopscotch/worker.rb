@@ -40,7 +40,6 @@ module Hopscotch
 
     def connect_to_queue!
       @queue = Hopscotch.broker.queue(@queue_name)
-      Hopscotch.broker.channel.prefetch(1)
       @queue.bind(@exchange, routing_key: @topic)
     end
   end
