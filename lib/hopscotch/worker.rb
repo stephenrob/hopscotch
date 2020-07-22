@@ -22,7 +22,6 @@ module Hopscotch
       @queue.subscribe(consumer_tag: SecureRandom.uuid, block: true, manual_ack: true) do |delivery_info, properties, body|
         message = RawMessage.new(delivery_info, properties, body)
         unless message.valid?
-          puts "rejecting"
           logger.debug("Rejecting message with id #{properties.message_id} due to not being valid")
           Hopscotch.broker.reject(message.delivery_info.delivery_tag)
           next

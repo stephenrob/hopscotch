@@ -11,10 +11,8 @@ module Hopscotch
     def handle_message(message)
       response = @klass.new.handle(message)
       if response == :ack
-        puts "Job succeeded acknowledging"
         Hopscotch.broker.ack(message.delivery_info.delivery_tag)
       else
-        puts "Job failed rejecting"
         Hopscotch.broker.reject(message.delivery_info.delivery_tag)
       end
     end
