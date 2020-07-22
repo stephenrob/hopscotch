@@ -34,6 +34,8 @@ module Hopscotch
       queued_messages << {topic: topic, message: message}
     end
 
+    alias_method :publish_message, :queue_message
+
     def queued_messages
       @queued_messages ||= []
     end

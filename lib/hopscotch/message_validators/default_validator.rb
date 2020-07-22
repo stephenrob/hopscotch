@@ -15,8 +15,6 @@ module Hopscotch
       validates_meta_attribute :version
       validates_meta_attribute :messageId
 
-      validates_data_attribute :deep
-
       def self.is_valid?(message)
         validators.all? { |validator| validator.call(message) }
       end
