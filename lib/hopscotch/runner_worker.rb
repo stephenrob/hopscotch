@@ -8,7 +8,7 @@ module Hopscotch
     end
 
     def run
-      workers = config[:workers]
+      workers = config[:hopscotch_workers]
 
       @workers = workers.map do |worker|
         if worker.is_a?(Class)

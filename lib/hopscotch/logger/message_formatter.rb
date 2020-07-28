@@ -5,7 +5,7 @@ module Hopscotch
   module Logger
     class MessageFormatter < ::SemanticLogger::Formatters::Raw
 
-      def initialize(message_type: 'hopscotch.logger.message', message_version: '0.1.0', time_format: nil, time_key: nil, **args)
+      def initialize(message_type: 'hopscotch.logger.message', message_version: '0.1.0', time_format: nil, time_key: :time, **args)
         @message_type = message_type
         @message_version = message_version
         super(time_format: time_format, time_key: time_key, **args)

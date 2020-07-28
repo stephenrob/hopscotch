@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    Hopscotch (0.1.0)
+    hopscotch (0.1.0)
       bunny (~> 2.15)
-      dry-configurable (~> 0.11)
+      dry-configurable (~> 0.8)
       semantic_logger (~> 4.7)
       serverengine (~> 2.2)
 
@@ -34,7 +34,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  Hopscotch!
+  hopscotch!
   minitest (~> 5.0)
   mocha (~> 1.11)
   rake (~> 12.0)

@@ -23,7 +23,7 @@ module Hopscotch
       ServerEngine.create(nil, RunnerWorker, {
           daemonize: false,
           log: '-',
-          workers: @workers
+          hopscotch_workers: @workers
       })
     end
   end

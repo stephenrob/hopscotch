@@ -1,7 +1,7 @@
 require_relative 'lib/hopscotch/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "Hopscotch"
+  spec.name          = "hopscotch"
   spec.version       = Hopscotch::VERSION
   spec.authors       = ["Stephen Robinson"]
   spec.email         = ["opensource@stephenrob.dev"]
@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+  spec.metadata["allowed_push_host"] = ""
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/stephenrob/hopscotch"
@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency 'bunny', '~> 2.15'
-  spec.add_dependency "dry-configurable", "~> 0.11"
+  spec.add_dependency "dry-configurable", "~> 0.8"
   spec.add_dependency 'semantic_logger', '~> 4.7'
   spec.add_dependency 'serverengine', '~> 2.2'
 end

@@ -17,7 +17,7 @@ module Hopscotch
 
       parse_message_metadata(message.processed_message)
 
-      logger.tagged(workflow: workflow, workflow_id: workflow_id, run_id: run_id) do
+      logger.tagged(workflow: workflow, workflow_id: workflow_id, run_id: run_id, job: self.class.to_s) do
 
         logger.info("Starting run #{run_id} of workflow #{workflow} with id #{workflow_id}")
 
@@ -53,7 +53,6 @@ module Hopscotch
     def parse_message_metadata(message)
       @workflow_id = message.meta[:workflowId]
       @workflow = message.meta[:workflow]
-      @run_id = message.meta[:run_id]
     end
 
   end

@@ -18,20 +18,25 @@ module Hopscotch
     def start!
       connect_to_queue! unless @queue
       @subscription = @queue.subscribe(consumer_tag: SecureRandom.uuid, block: false, manual_ack: true) do |delivery_info, properties, body|
-        message = RawMessage.new(delivery_info, properties, body)
-        unless message.valid?
-          logger.debug("Rejecting message with id #{properties.message_id} due to not being valid")
-          broker.reject(message.delivery_info.delivery_tag)
-          next
-        end
-        response = handle_message(message)
+        begin
 
-        if response == :ack
-          broker.ack(message.delivery_info.delivery_tag)
-        else
-          broker.reject(message.delivery_info.delivery_tag)
-        end
+          message = RawMessage.new(delivery_info, properties, body)
+          unless message.valid?
+            logger.debug("Rejecting message with id #{properties.message_id} due to not being valid")
+            broker.reject(message.delivery_info.delivery_tag)
+            next
+          end
+          response = handle_message(message)
 
+          if response == :ack
+            broker.ack(message.delivery_info.delivery_tag)
+          else
+            broker.reject(message.delivery_info.delivery_tag)
+          end
+          
+        rescue StandardError => excpetion
+          Raven.capture_exception(exception)
+        end
       end
     rescue Interrupt => _
       broker.close
