@@ -23,6 +23,9 @@ module Hopscotch
       ServerEngine.create(nil, RunnerWorker, {
           daemonize: false,
           log: '-',
+          workers: 2,
+          worker_type: 'thread',
+          start_worker_delay: 5,
           hopscotch_workers: @workers
       })
     end

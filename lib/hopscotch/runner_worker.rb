@@ -21,6 +21,7 @@ module Hopscotch
 
       @workers.each do |worker|
         worker.start!
+        sleep(2)
       end
 
       until @stop_flag.wait_for_set(5)
