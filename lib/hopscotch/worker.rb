@@ -34,7 +34,7 @@ module Hopscotch
             broker.reject(message.delivery_info.delivery_tag)
           end
           
-        rescue StandardError => excpetion
+        rescue StandardError => exception
           Raven.capture_exception(exception)
         end
       end
