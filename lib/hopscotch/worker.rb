@@ -36,6 +36,8 @@ module Hopscotch
           
         rescue StandardError => exception
           Raven.capture_exception(exception)
+          broker.reject(message.delivery_info.delivery_tag)
+          logger.debug("Rejecting message with id #{properties.message_id} due to error")
         end
       end
     rescue Interrupt => _
