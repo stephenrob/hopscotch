@@ -1,10 +1,9 @@
 require 'hopscotch/raw_message'
-require 'hopscotch/message_validators/validations'
+require 'hopscotch/message_validators/base_validator'
 
 module Hopscotch
   module MessageValidators
-    class DefaultValidator
-      include Validations
+    class DefaultValidator < BaseValidator
 
       validates_class RawMessage
 
@@ -14,10 +13,6 @@ module Hopscotch
       validates_meta_attribute :type
       validates_meta_attribute :version
       validates_meta_attribute :messageId
-
-      def self.is_valid?(message)
-        validators.all? { |validator| validator.call(message) }
-      end
 
     end
   end
