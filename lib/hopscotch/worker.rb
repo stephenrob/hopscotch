@@ -41,7 +41,7 @@ module Hopscotch
         end
       end
     rescue Interrupt => _
-      broker.close
+      stop!
       exit(0)
     end
 
