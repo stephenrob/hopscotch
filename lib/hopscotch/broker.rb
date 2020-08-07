@@ -10,11 +10,11 @@ module Hopscotch
     end
 
     def data_exchange
-      @data_exchange ||= connect_to_exchange!('hopscotch.data')
+      @data_exchange ||= connect_to_exchange!(Hopscotch.data_exchange_name)
     end
 
     def system_exchange
-      @system_exchange ||= connect_to_exchange!('hopscotch.system')
+      @system_exchange ||= connect_to_exchange!(Hopscotch.system_exchange_name)
     end
 
     def connect_to_exchange!(name)
@@ -23,14 +23,16 @@ module Hopscotch
       create_exchange!(name)
     end
 
-    def queue(name)
+    def queue(name, prefetch: 5, durable: true)
       start_connection!
       create_channel! unless channel
-      @channel.prefetch(1)
-      @channel.queue(name, {durable: true})
+      @channel.prefetch(prefetch)
+      @channel.queue(name, {durable: durable})
     end
 
     def create_exchange!(name, type: 'topic')
+      require_connection!
+      require_channel!
       Bunny::Exchange.new(@channel, type, name, {durable: true})
     end
 
@@ -53,15 +55,23 @@ module Hopscotch
     end
 
     def ack(delivery_tag)
-      start_connection!
-      create_channel! unless channel
+      require_connection!
+      require_channel!
       channel.ack(delivery_tag, false)
     end
 
     def reject(delivery_tag, requeue=false)
-      start_connection!
-      create_channel! unless channel
+      require_connection!
+      require_channel!
       channel.reject(delivery_tag, requeue)
+    end
+
+    def require_connection!
+      raise StandardError.new('No connection') unless connection
+    end
+
+    def require_channel!
+      raise StandardError.new('No channel') unless channel
     end
 
   end

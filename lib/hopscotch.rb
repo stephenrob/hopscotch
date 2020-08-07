@@ -22,6 +22,8 @@ module Hopscotch
   setting :log_adapter, Hopscotch::Logger::Adapter, reader: true
   setting :log_formatter, Hopscotch::Logger::MessageFormatter, reader: true
   setting :message_validator, Hopscotch::MessageValidators::DefaultValidator, reader: true
+  setting :data_exchange_name, 'hopscotch.data', reader: true
+  setting :system_exchange_name, 'hopscotch.system', reader: true
 
   def self.broker
     @broker ||= Hopscotch::Broker.new(client)
